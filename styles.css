@@ -1,0 +1,24 @@
+body[data-theme="dark"] {
+   background-color: #121212;
+   color: #ffffff;
+}
+
+body[data-theme="light"] {
+   background-color: #ffffff;
+   color: #000000;
+}
+
+body[data-theme="high-contrast"] {
+   background-color: #000000;
+   color: #ffff00;
+   font-weight: bold;
+}
+
+/* Styles for the overlay labels */
+#assistEase-overlay div {
+   font-size: 14px;
+   font-weight: bold;
+   text-align: center;
+   pointer-events: none;
+   /* Prevent interaction with labels */
+}
