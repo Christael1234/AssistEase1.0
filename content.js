@@ -1,6 +1,5 @@
 
 
-
 // Initialize Speech Recognition
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = "en-US";
@@ -10,41 +9,7 @@ recognition.continuous = true;
 // Start listening for voice commands
 recognition.start();
 
-// const createOverlay = () => {
-//    const existingOverlay = document.getElementById("assistEase-overlay");
-//    if (existingOverlay) existingOverlay.remove();
 
-//    const overlay = document.createElement("div");
-//    overlay.id = "assistEase-overlay";
-//    overlay.style.position = "fixed";
-//    overlay.style.top = "0";
-//    overlay.style.left = "0";
-//    overlay.style.width = "100%";
-//    overlay.style.height = "100%";
-//    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
-//    overlay.style.zIndex = "10000";
-//    overlay.style.pointerEvents = "none";
-//    document.body.appendChild(overlay);
-
-//    const clickableElements = document.querySelectorAll("a, button, [role='button']");
-//    clickableElements.forEach((el, index) => {
-//       const rect = el.getBoundingClientRect();
-//       const label = document.createElement("div");
-
-//       label.textContent = index + 1;
-//       label.style.position = "absolute";
-//       label.style.top = `${rect.top + window.scrollY}px`;
-//       label.style.left = `${rect.left + window.scrollX}px`;
-//       label.style.backgroundColor = "#FF5722";
-//       label.style.color = "#FFF";
-//       label.style.padding = "2px 5px";
-//       label.style.borderRadius = "5px";
-//       label.style.zIndex = "10001";
-//       overlay.appendChild(label);
-
-//       el.setAttribute("data-assistease-index", index + 1);
-//    });
-// };
 
 // Inject toast HTML
 if (!document.getElementById("toast")) {
@@ -54,16 +19,16 @@ if (!document.getElementById("toast")) {
    document.body.appendChild(toastDiv);
 }
 
-//function to show toast
 function showToast(message) {
-   const toast = document.getElementById("toast");
-   toast.textContent = message;
-   toast.style.display = "block";
-
-   setTimeout(() => {
-      toast.style.display = "none";
-   }, 3000);
+   Swal.fire({
+      position: 'top',
+      icon: 'info',
+      title: message,
+      showConfirmButton: false,
+      timer: 2000 // Auto dismiss after 2 seconds
+   });
 }
+
 
 // Function to handle web search
 function performWebSearch(query) {
@@ -138,6 +103,45 @@ const removeOverlay = () => {
    if (overlay) overlay.remove();
 };
 
+let autoScrollInterval = null;
+let scrollSpeed = 100; // Default scroll speed in ms
+
+// Function to start auto-scroll
+function startAutoScroll() {
+   if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+   }
+   autoScrollInterval = setInterval(() => {
+      window.scrollBy(0, 5); // Scroll 5px vertically
+   }, scrollSpeed);
+   showToast("Auto-scroll started.");
+}
+
+// Function to adjust scroll speed
+function adjustScrollSpeed(speedChange) {
+   if (autoScrollInterval) {
+      scrollSpeed = Math.max(20, scrollSpeed + speedChange); // Prevent speed from going below 20ms
+      clearInterval(autoScrollInterval);
+      startAutoScroll(); // Restart with new speed
+      showToast(`Scroll speed adjusted to ${scrollSpeed} ms.`);
+   } else {
+      showToast("Start auto-scroll first.");
+   }
+}
+
+// Function to stop auto-scroll
+function stopAutoScroll() {
+   if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+      showToast("Auto-scroll stopped.");
+   } else {
+      showToast("Auto-scroll is not active.");
+   }
+}
+
+
+
 
 recognition.onresult = (event) => {
    const command = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
@@ -147,33 +151,45 @@ recognition.onresult = (event) => {
    if (command.includes("increase text size")) {
       adjustTextSize(2); // Increase by 2px
       showToast("Increased text size.");
+
    } else if (command.includes("reduce text size")) {
       adjustTextSize(-2); // Decrease by 2px
       showToast("Reduced text size.");
+
    } else if (command.includes("reset text size")) {
       resetTextSize(); // Reset to default
       showToast("Text size reset to default.");
+
+
+
    } else if (command.includes("dark mode")) {
       applyTheme("dark");
       showToast("Dark mode activated.");
+
    } else if (command.includes("light mode")) {
       applyTheme("light");
       showToast("Light mode activated.");
+
    } else if (command.includes("high contrast")) {
       applyTheme("high-contrast");
       showToast("High contrast mode activated.");
+
    } else if (command.includes("scroll up")) {
       scrollPage(-200); // Scroll up by 200px
       showToast("Scrolled up.");
+
    } else if (command.includes("scroll down")) {
       scrollPage(200); // Scroll down by 200px
       showToast("Scrolled down.");
+
    } else if (command.includes("open")) {
       openWebsite(command);
       showToast("Opening website...");
+
    } else if (command.includes("show links")) {
       createOverlay();
       showToast("Links overlay displayed.");
+
    } else if (command.startsWith("click")) {
       const label = command.replace("click", "").trim();
       activateElement(label);
@@ -181,12 +197,15 @@ recognition.onresult = (event) => {
    } else if (command.includes("hide links")) {
       removeOverlay();
       showToast("Links overlay hidden.");
+
    } else if (command.includes("bookmark this page")) {
       saveBookmark();
       showToast("Page bookmarked.");
+
    } else if (command.includes("show my bookmarks")) {
       showBookmarks();
       showToast("Displaying bookmarks.");
+
    } else if (command.startsWith("open ")) {
       const bookmarkTitle = command.replace("open ", "").trim();
       openBookmark(bookmarkTitle);
@@ -209,6 +228,14 @@ recognition.onresult = (event) => {
       handleTabCommand(command, "closeTab");
    } else if (command.startsWith("reload tab")) {
       handleTabCommand(command, "reloadTab");
+   } if (command.includes("begin auto scroll")) {
+      startAutoScroll();
+   } else if (command.includes("scroll faster")) {
+      adjustScrollSpeed(-20); // Increase speed (reduce delay)
+   } else if (command.includes("scroll slower")) {
+      adjustScrollSpeed(20); // Decrease speed (increase delay)
+   } else if (command.includes("stop auto scroll")) {
+      stopAutoScroll();
    }
 
 }
@@ -248,6 +275,7 @@ const applyTheme = (theme) => {
       console.log(`Theme switched to: ${theme}`);
    });
 };
+
 
 // Function to scroll the page
 const scrollPage = (pixels) => {
@@ -328,6 +356,7 @@ const openBookmark = (bookmarkTitle) => {
 function goBack() {
    window.history.back();
    showToast("Navigated back.");
+
 }
 
 
@@ -335,6 +364,7 @@ function goBack() {
 function goForward() {
    window.history.forward();
    showToast("Navigated forward.");
+
 }
 
 function parseTabIdentifier(identifier) {
@@ -369,6 +399,7 @@ function handleTabCommand(command, action) {
          });
       } else {
          showToast("Please specify a valid tab identifier (e.g., 7 or seven).");
+
       }
    }
 }
@@ -377,5 +408,5 @@ function handleTabCommand(command, action) {
 function reloadPage() {
    location.reload();
    showToast("Page reloaded.");
-}
 
+}

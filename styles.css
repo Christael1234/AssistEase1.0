@@ -1,7 +1,32 @@
 body[data-theme="dark"] {
    background-color: #121212;
    color: #ffffff;
+
 }
+
+body[data-theme="dark"] {
+   background-color: #121212;
+   color: #ffffff;
+}
+
+body[data-theme="dark"] a {
+   color: #90caf9;
+   /* Light blue for links */
+}
+
+body[data-theme="dark"] button,
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea {
+   background-color: #424242;
+   color: #ffffff;
+   border: 1px solid #ffffff;
+}
+
+body[data-theme="dark"] img {
+   filter: brightness(0.8);
+}
+
 
 body[data-theme="light"] {
    background-color: #ffffff;

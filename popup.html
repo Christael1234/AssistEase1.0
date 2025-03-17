@@ -3,20 +3,29 @@
 <head>
   <title>AssistEase</title>
   <link rel="stylesheet" href="popup.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body style="font-family: 'Roboto', sans-serif;">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <h1>AssistEase</h1>
-  <button id="enable-feature">Enable Voice Control</button>
-  <button id="increase-size">Increase Text Size</button>
-<button id="decrease-size">Decrease Text Size</button>
-<button id="dark-mode">Dark Mode</button>
-<button id="light-mode">Light Mode</button>
-<button id="high-contrast">High Contrast</button>
-<div id="bookmarks-list">
-  <h2>Your Bookmarks</h2>
-  <ul id="bookmarks"></ul>
-</div>
+  <button id="enable-feature"><i class="fas fa-microphone"></i> Enable Voice Control</button>
+
+  <button id="increase-size"><i class="fas fa-plus"></i> Increase Text Size</button>
+
+  <button id="decrease-size"><i class="fas fa-minus"></i> Decrease Text Size</button>
+
+  <button id="dark-mode"><i class="fas fa-moon"></i> Dark Mode</button>
+
+  <button id="light-mode"><i class="fas fa-sun"></i> Light Mode</button>
+
+  <button id="high-contrast"><i class="fas fa-adjust"></i> High Contrast</button>
+
+  <div id="bookmarks-list">
+    <h2>Your Bookmarks</h2>
+    <ul id="bookmarks"></ul>
+  </div>
 
   <script src="popup.js"></script>
 </body>

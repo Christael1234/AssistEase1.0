@@ -1,18 +1,45 @@
 body {
    font-family: Arial, sans-serif;
-   padding: 10px;
+   padding: 20px;
    text-align: center;
+   background-color: #f9f9f9;
+   /* Light background for better contrast */
+   border-radius: 10px;
+   /* Rounded corners */
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   /* Subtle shadow for depth */
+}
+
+h1 {
+   color: #4d2594;
+   /* Primary color for headings */
+   margin-bottom: 20px;
+   /* Space below the heading */
 }
 
 button {
-   padding: 10px 20px;
-   background-color: #4CAF50;
+   padding: 10px 15px;
+   /* Adjusted padding */
+   margin: 10px 0;
+   /* Space between buttons */
+   background-color: #4d2594;
+   /* Primary button color */
    color: white;
    border: none;
-   border-radius: 5px;
+   border-radius: 50px;
    cursor: pointer;
+   transition: background-color 0.3s ease;
+   /* Smooth transition for hover effect */
+   font-size: 16px;
+   /* Increased font size for better readability */
 }
 
 button:hover {
-   background-color: #45a049;
+   background-color: #6a3eab;
+   /* Lighter shade on hover */
+}
+
+#bookmarks-list {
+   margin-top: 20px;
+   /* Space above bookmarks section */
 }
