@@ -1,45 +1,127 @@
-body {
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
    font-family: Arial, sans-serif;
+}
+
+.popup-container {
+   width: 300px;
    padding: 20px;
-   text-align: center;
-   background-color: #f9f9f9;
-   /* Light background for better contrast */
+   background: white;
    border-radius: 10px;
-   /* Rounded corners */
-   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-   /* Subtle shadow for depth */
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+   text-align: center;
+}
+
+header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 15px;
 }
 
 h1 {
-   color: #4d2594;
-   /* Primary color for headings */
-   margin-bottom: 20px;
-   /* Space below the heading */
+   font-size: 18px;
+   font-weight: bold;
 }
 
-button {
-   padding: 10px 15px;
-   /* Adjusted padding */
-   margin: 10px 0;
-   /* Space between buttons */
-   background-color: #4d2594;
-   /* Primary button color */
-   color: white;
+.close-btn {
+   background: none;
    border: none;
-   border-radius: 50px;
+   font-size: 20px;
    cursor: pointer;
-   transition: background-color 0.3s ease;
-   /* Smooth transition for hover effect */
+}
+
+.menu {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 10px;
+}
+
+.menu-btn,
+.submenu-btn {
+   background: #e0e0e0;
+   border: none;
+   padding: 8px 12px;
+   border-radius: 10px;
+   font-size: 14px;
+   cursor: pointer;
+   transition: 0.3s;
+}
+
+.menu-btn:hover,
+.submenu-btn:hover {
+   background: #c0c0c0;
+}
+
+.submenu {
+   display: none;
+   text-align: center;
+}
+
+.submenu h2 {
+   margin-bottom: 10px;
    font-size: 16px;
-   /* Increased font size for better readability */
 }
 
-button:hover {
-   background-color: #6a3eab;
-   /* Lighter shade on hover */
+.hidden {
+   display: none;
 }
 
-#bookmarks-list {
-   margin-top: 20px;
-   /* Space above bookmarks section */
+.back-btn {
+   margin-top: 10px;
+   padding: 5px 10px;
+   border: none;
+   background: #007bff;
+   color: white;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.back-btn:hover {
+   background: #0056b3;
+}
+
+/* Styling for Sliders */
+.slider-container {
+   margin: 10px 0;
+   text-align: left;
+}
+
+.slider-label {
+   font-size: 14px;
+   font-weight: bold;
+}
+
+input[type="range"] {
+   width: 100%;
+   margin-top: 5px;
+   appearance: none;
+   height: 6px;
+   background: #ddd;
+   border-radius: 5px;
+   outline: none;
+   transition: 0.3s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+   appearance: none;
+   width: 14px;
+   height: 14px;
+   background: #007bff;
+   border-radius: 50%;
+   cursor: pointer;
+   transition: 0.3s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+   background: #0056b3;
+}
+
+
+img {
+   width: 20%;
+   height: 20%;
 }

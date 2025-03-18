@@ -94,7 +94,7 @@ const activateElement = (label) => {
          element.dispatchEvent(event);
       }
    } else {
-      speak(`Element ${label} not found.`);
+
    }
 };
 // Function to remove the overlay
@@ -116,6 +116,28 @@ function startAutoScroll() {
    }, scrollSpeed);
    showToast("Auto-scroll started.");
 }
+
+const adjustButtonSize = (adjustment) => {
+   const minSize = 10;  // Minimum padding size
+   const maxSize = 40;  // Maximum padding size
+
+   // Get the current size from localStorage or use default
+   let currentSize = parseInt(localStorage.getItem("assistEaseButtonSize")) || 14;
+   let newSize = Math.min(Math.max(currentSize + adjustment, minSize), maxSize);
+
+   // Apply new size
+   document.querySelectorAll("button").forEach(btn => {
+      btn.style.padding = `${newSize}px`;  // Set padding directly
+      btn.style.fontSize = `${newSize * 0.8}px`; // Adjust font size proportionally
+   });
+
+   // Save the new size in localStorage
+   localStorage.setItem("assistEaseButtonSize", newSize);
+   console.log("Updated button size:", newSize);
+};
+
+
+
 
 // Function to adjust scroll speed
 function adjustScrollSpeed(speedChange) {
@@ -236,9 +258,65 @@ recognition.onresult = (event) => {
       adjustScrollSpeed(20); // Decrease speed (increase delay)
    } else if (command.includes("stop auto scroll")) {
       stopAutoScroll();
+   } if (command.includes("increase button size") || command.includes("make buttons bigger")) {
+      adjustButtonSize(5);  // Increase button size
+   } else if (command.includes("decrease button size") || command.includes("make buttons smaller")) {
+      adjustButtonSize(-5); // Decrease button size
+   } else if (command.includes("show buttons")) {
+      showButtonsWithNumbers();
+   } else if (command.includes("hide buttons")) {
+      hideButtons();
    }
-
 }
+
+
+
+
+
+let buttons = [];
+
+// Function to highlight buttons and assign numbers
+const showButtonsWithNumbers = () => {
+   buttons = Array.from(document.querySelectorAll("button"));
+
+   buttons.forEach((btn, index) => {
+      btn.dataset.buttonIndex = index + 1; // Assign index starting from 1
+      btn.style.position = "relative"; // Ensure numbering is positioned correctly
+      btn.style.outline = "3px solid red"; // Highlight button
+
+      // Remove old number labels if they exist
+      const existingLabel = btn.querySelector(".button-label");
+      if (existingLabel) existingLabel.remove();
+
+      // Create and attach label
+      const label = document.createElement("span");
+      label.className = "button-label";
+      label.textContent = index + 1;
+      label.style.position = "absolute";
+      label.style.top = "5px";
+      label.style.right = "5px";
+      label.style.background = "yellow";
+      label.style.color = "black";
+      label.style.fontSize = "12px";
+      label.style.padding = "2px 5px";
+      label.style.borderRadius = "3px";
+      btn.appendChild(label);
+   });
+
+   console.log("Buttons are now numbered.");
+};
+
+// Function to remove highlights and numbers
+const hideButtons = () => {
+   buttons.forEach((btn) => {
+      btn.style.outline = "none";
+      const label = btn.querySelector(".button-label");
+      if (label) label.remove();
+   });
+};
+
+
+
 
 // Function to adjust text size
 const adjustTextSize = (change) => {
@@ -410,3 +488,16 @@ function reloadPage() {
    showToast("Page reloaded.");
 
 }
+
+chrome.storage.sync.get("shortcuts", (data) => {
+   const shortcuts = data.shortcuts || { scrollUp: "ArrowUp", scrollDown: "ArrowDown" };
+
+   document.addEventListener("keydown", (event) => {
+      if (event.key === shortcuts.scrollUp) {
+         window.scrollBy(0, -100);  // Scroll Up
+      } else if (event.key === shortcuts.scrollDown) {
+         window.scrollBy(0, 100);   // Scroll Down
+      }
+   });
+});
+

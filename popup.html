@@ -1,32 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AssistEase</title>
-  <link rel="stylesheet" href="popup.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor Web</title>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body style="font-family: 'Roboto', sans-serif;">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+    <div class="popup-container">
+        <header>
+            <h1>🚀 MOTOR WEB</h1>
+            <button class="close-btn">&times;</button>
+        </header>
+        
+        <div id="main-menu" class="menu">
+            <button class="menu-btn" data-target="voice-control">Voice Control</button>
+            <button class="menu-btn" data-target="larger-elements">Larger Elements</button>
+            <button class="menu-btn" data-target="keyboard-shortcuts">Keyboard Shortcuts</button>
+            <button class="menu-btn" data-target="auto-scroll">Auto Scroll</button>
+        </div>
 
-  <h1>AssistEase</h1>
-  <button id="enable-feature"><i class="fas fa-microphone"></i> Enable Voice Control</button>
+        <!-- Voice Control -->
+        <div id="voice-control" class="submenu hidden">
+            <h2>🎙 Voice Control</h2>
+            <p>Enable or disable voice commands.</p>
+            <button class="back-btn">⬅ Back</button>
+        </div>
 
-  <button id="increase-size"><i class="fas fa-plus"></i> Increase Text Size</button>
+        <!-- Larger Elements Menu -->
+        <div id="larger-elements" class="submenu hidden">
+            <h2>🔍 Larger Elements</h2>
+            <button class="submenu-btn" data-target="text-resize">Text Size</button>
+            <button class="submenu-btn" data-target="button-resize">Button Size</button>
+            <button class="submenu-btn" data-target="other-elements-resize">Other Elements</button>
+            <button class="back-btn">⬅ Back</button>
+        </div>
 
-  <button id="decrease-size"><i class="fas fa-minus"></i> Decrease Text Size</button>
+        <!-- Text Resize -->
+        <div id="text-resize" class="submenu hidden">
+            <h2>🔡 Adjust Text Size</h2>
+            <label for="text-slider">Text Size:</label>
+            <input type="range" id="text-slider" min="10" max="40" value="16">
+            <button class="back-btn">⬅ Back</button>
+        </div>
 
-  <button id="dark-mode"><i class="fas fa-moon"></i> Dark Mode</button>
+        <!-- Button Resize -->
+        <div id="button-resize" class="submenu hidden">
+            <h2>🔘 Adjust Button Size</h2>
+            <label for="button-slider">Button Size:</label>
+            <input type="range" id="button-slider" min="50" max="200" value="100">
+            <button class="back-btn">⬅ Back</button>
+        </div>
 
-  <button id="light-mode"><i class="fas fa-sun"></i> Light Mode</button>
+        <!-- Other Elements Resize -->
+        <div id="other-elements-resize" class="submenu hidden">
+            <h2>🎨 Adjust Other Elements</h2>
+            <label for="other-slider">Element Size:</label>
+            <input type="range" id="other-slider" min="10" max="50" value="20">
+            <button class="back-btn">⬅ Back</button>
+        </div>
 
-  <button id="high-contrast"><i class="fas fa-adjust"></i> High Contrast</button>
+        <!-- Keyboard Shortcuts -->
+        <div id="keyboard-shortcuts" class="submenu hidden">
+            <h2>⌨ Keyboard Shortcuts</h2>
+            <p>Customize shortcut keys for navigation.</p>
+            <button class="back-btn">⬅ Back</button>
+        </div>
 
-  <div id="bookmarks-list">
-    <h2>Your Bookmarks</h2>
-    <ul id="bookmarks"></ul>
-  </div>
+        <!-- Auto Scroll -->
+        <div id="auto-scroll" class="submenu hidden">
+            <h2>📜 Auto Scroll</h2>
+            <label for="scroll-speed">Set Scroll Speed:</label>
+            <input type="range" id="scroll-speed" min="1" max="5">
+            <button class="back-btn">⬅ Back</button>
+        </div>
+    </div>
 
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>
